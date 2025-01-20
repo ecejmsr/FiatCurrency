@@ -9,7 +9,7 @@ import com.bps.fiatscape.R
 import com.bps.fiatscape.common.dataclasses.Coin
 import com.bps.fiatscape.databinding.CoinListViewHolderBinding
 
-class CryptoListRV(private val ) : RecyclerView.Adapter<CryptoListRV.CryptoViewHolder>() {
+class CryptoListRV(private val onCoinSelected: (Coin) -> Unit) : RecyclerView.Adapter<CryptoListRV.CryptoViewHolder>() {
     private val coins = mutableListOf<Coin>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CryptoViewHolder {
@@ -42,6 +42,9 @@ class CryptoListRV(private val ) : RecyclerView.Adapter<CryptoListRV.CryptoViewH
         fun bind(coin: Coin) {
             binding.coin = coin
             binding.executePendingBindings()
+            binding.root.setOnClickListener {
+                onCoinSelected(coin)
+            }
         }
     }
 

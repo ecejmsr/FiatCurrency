@@ -7,4 +7,12 @@
     <string name="last_refreshed">Last Refreshed: %1$s</string>
     <string name="refresh">Refresh</string>
     <string name="hello">Hello!</string>
+    <string name="favorite_coin">Favorite Coin</string>
+    <string name="favorites">Favorites</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="rank">Rank</string>
+    <string name="type">Type</string>
+    <string name="error_graph_currenly_unavaiable">Error: Graph Currenly Unavaiable</string>
+    <string name="current_price">Current Price: %1$s</string>
 </resources>

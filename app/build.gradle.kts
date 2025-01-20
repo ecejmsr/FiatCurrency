@@ -5,6 +5,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -13,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.bps.fiatscape"
-        minSdk = 25
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -57,12 +58,13 @@ kapt {
 }
 
 dependencies {
+    val navVersion = "2.8.5"
+    val mockkVersion = "1.13.16"
+    val vicoVersion = "2.0.0-beta.7"
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation("androidx.fragment:fragment-ktx:1.5.6")
-    val navVersion = "2.8.5"
-    val mockkVersion = "1.13.16"
 
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
@@ -79,6 +81,9 @@ dependencies {
     implementation("com.google.code.gson:gson:2.11.0")
     //GSON
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.11.0")
+    implementation("com.squareup.moshi:moshi:1.15.1")
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
     //Hilt
     implementation("com.google.dagger:hilt-android:2.55")
     kapt("com.google.dagger:hilt-android-compiler:2.55")
@@ -86,6 +91,9 @@ dependencies {
     implementation("com.jakewharton.timber:timber:5.0.1")
     //Material Design
     implementation("com.google.android.material:material:1.12.0")
+    //Graph
+    implementation("com.patrykandpatrick.vico:compose-m2:$vicoVersion")
+    implementation("com.patrykandpatrick.vico:views:$vicoVersion")
 
     testImplementation("junit:junit:4.13.2")
     //MockK

@@ -44,4 +44,9 @@
         screen. This is required. -->
         <item name="postSplashScreenTheme">@style/Base.Theme.FiatScape</item>
     </style>
+    <style name="ChartStyle">
+        <item name="layers">line</item>
+        <item name="showBottomAxis">true</item>
+        <item name="showStartAxis">true</item>
+    </style>
 </resources>

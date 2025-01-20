@@ -10,4 +10,5 @@
     <color name="colorTextPrimary">#FFFFFF</color> <!-- White for text -->
     <color name="colorTextSecondary">#B3B3B3</color> <!-- Gray for secondary text -->
     <color name="white">#FFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

@@ -8,5 +8,25 @@
         android:id="@+id/landingFragment"
         android:name="com.bps.fiatscape.landing.LandingFragment"
         android:label="fragment_landing"
-        tools:layout="@layout/fragment_landing" />
+        tools:layout="@layout/fragment_landing" >
+        <action
+            android:id="@+id/action_landingFragment_to_coinOverviewFragment"
+            app:destination="@id/coinOverviewFragment">
+            <argument
+                android:name="coin"
+                app:argType="com.bps.fiatscape.common.dataclasses.Coin"
+                />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/coinOverviewFragment"
+        android:name="com.bps.fiatscape.coinOverview.CoinOverviewFragment"
+        android:label="fragment_coin_overview"
+        tools:layout="@layout/fragment_coin_overview">
+
+        <argument
+            android:name="coin"
+            app:argType="com.bps.fiatscape.common.dataclasses.Coin"
+            />
+    </fragment>
 </navigation>

@@ -4,18 +4,15 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.bps.fiatscape.R
 import com.bps.fiatscape.common.base.BaseViewModel
 import com.bps.fiatscape.common.dataclasses.APIResponse
 import com.bps.fiatscape.common.dataclasses.Coin
 import com.bps.fiatscape.common.network.CoinPaprikaRepo
+import com.bps.fiatscape.common.util.TimeUtils.refreshDataDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -55,13 +52,11 @@ class LandingViewModel  @Inject constructor(
                 }
             }
 
-            refreshData()
+            refreshDataDate(_lastRefreshed, app)
         }
     }
 
-    private fun refreshData() {
-        val date = Date()
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-        _lastRefreshed.postValue(app.getString(R.string.last_refreshed, dateFormat.format(date)))
+    fun navigateToCoinOverview(coin: Coin) {
+        navigationCommand.value = LandingFragmentDirections.actionLandingFragmentToCoinOverviewFragment(coin)
     }
 }
