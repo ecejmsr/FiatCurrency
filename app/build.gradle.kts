@@ -80,8 +80,8 @@ dependencies {
     //GSON
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     //Hilt
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+    implementation("com.google.dagger:hilt-android:2.55")
+    kapt("com.google.dagger:hilt-android-compiler:2.55")
     //Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
     //Material Design

@@ -1,14 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".landing.LandingFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.bps.fiatscape.landing.LandingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="#FFFFFF"
-        android:text="Hello" />
+        tools:context=".landing.LandingFragment">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/fragment_landing_refresh_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hello"
+            android:textColor="@color/colorError"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintTop_toTopOf="@id/fragment_landing_refresh_icon"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_landing_refresh_icon"
+            app:layout_constraintEnd_toStartOf="@id/fragment_landing_refresh_icon"/>
+
+        <ImageButton
+            android:id="@+id/fragment_landing_refresh_icon"
+            android:layout_width="wrap_content"
+            android:onClick="@{() -> viewModel.fetchCoinList()}"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/refresh"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/sync"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_landing_RV"
+            android:layout_marginHorizontal="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/fragment_landing_refresh_icon"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/fragment_landing_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:indicatorColor="@color/colorError"
+            android:layout_marginHorizontal="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
