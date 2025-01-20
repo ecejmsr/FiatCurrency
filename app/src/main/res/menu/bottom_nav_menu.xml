@@ -2,15 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/connectionsHomeFragment"
-        android:title="@string/search" />
+        android:id="@+id/searchFragment"
+        android:title="@string/search"
+        android:icon="@drawable/search_icon" />
 
     <item
-        android:id="@+id/boredHomeLandingFragment"
-        android:title="@string/home" />
+        android:id="@+id/homeFragment"
+        android:title="@string/home"
+        android:icon="@drawable/home_icon"/>
 
     <item
-        android:id="@+id/chatHomeFragment"
-        android:title="@string/favorites" />
+        android:id="@+id/favoritesFragment"
+        android:title="@string/favorites"
+        android:icon="@drawable/favorite_icon"/>
 
 </menu>

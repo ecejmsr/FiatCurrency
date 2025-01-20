@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.bps.fiatscape.landing.LandingViewModel" />
+            type="com.bps.fiatscape.ui.landing.LandingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".landing.LandingFragment">
+        tools:context=".ui.landing.LandingFragment">
 
         <TextView
             android:id="@+id/fragment_landing_refresh_date"

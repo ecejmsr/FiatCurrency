@@ -79,7 +79,7 @@ dependencies {
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.google.code.gson:gson:2.11.0")
-    //GSON
+    //Transformations
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.11.0")
     implementation("com.squareup.moshi:moshi:1.15.1")
@@ -94,6 +94,8 @@ dependencies {
     //Graph
     implementation("com.patrykandpatrick.vico:compose-m2:$vicoVersion")
     implementation("com.patrykandpatrick.vico:views:$vicoVersion")
+    //Security
+    implementation("androidx.security:security-crypto:1.0.0")
 
     testImplementation("junit:junit:4.13.2")
     //MockK

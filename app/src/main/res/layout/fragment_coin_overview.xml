@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.bps.fiatscape.coinOverview.CoinOverviewViewModel" />
+            type="com.bps.fiatscape.ui.coinOverview.CoinOverviewViewModel" />
 
         <variable
             name="coin"
@@ -21,7 +21,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".coinOverview.CoinOverviewFragment">
+            tools:context=".ui.coinOverview.CoinOverviewFragment">
 
             <TextView
                 android:id="@+id/coin_list_view_holder_symbol"
