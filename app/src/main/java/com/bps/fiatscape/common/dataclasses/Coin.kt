@@ -1,20 +1,20 @@
 package com.bps.fiatscape.common.dataclasses
 
 import android.os.Parcelable
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class Coin(
     val id: String?,
     val name: String?,
     val symbol: String?,
     val rank: Int = 999,
-    @SerialName("is_new")
+    @Json(name = "is_new")
     val isNew: Boolean = false,
-    @SerialName("is_active")
+    @Json(name = "is_active")
     val isActive: Boolean = false,
     val type: String?
-): Parcelable
+) : Parcelable

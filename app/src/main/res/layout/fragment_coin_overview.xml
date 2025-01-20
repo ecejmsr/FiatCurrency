@@ -1,13 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".coinoverview.CoinOverviewFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.bps.fiatscape.coinOverview.CoinOverviewViewModel" />
+
+        <variable
+            name="coin"
+            type="com.bps.fiatscape.common.dataclasses.Coin" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".coinOverview.CoinOverviewFragment">
+
+            <TextView
+                android:id="@+id/coin_list_view_holder_symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/rounded_primary_background"
+                android:padding="16dp"
+                android:text="@{coin.symbol}"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="92sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="SSHH" />
+
+            <TextView
+                android:id="@+id/fragment_coin_overview_rank_price_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:text="@string/current_price"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toStartOf="@id/fragment_landing_refresh_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_coin_overview_name" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/fragment_coin_overview_price_refresh_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:indicatorColor="@color/colorError"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_coin_overview_rank_price_text"
+                app:layout_constraintEnd_toEndOf="@id/fragment_coin_overview_rank_price_text"
+                app:layout_constraintStart_toStartOf="@id/fragment_coin_overview_rank_price_text"
+                app:layout_constraintTop_toTopOf="@id/fragment_coin_overview_rank_price_text" />
+
+            <TextView
+                android:id="@+id/fragment_coin_overview_last_refreshed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/colorError"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_coin_overview_rank_price_text"
+                tools:text="Today's date is THE LAST DAY OF THE WORLD" />
+
+            <ImageButton
+                android:id="@+id/fragment_landing_refresh_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:onClick="@{() -> viewModel.fetchTickerData()}"
+                android:contentDescription="@string/refresh"
+                android:src="@drawable/sync"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_coin_overview_rank_price_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/fragment_coin_overview_rank_price_text" />
+
+            <TextView
+                android:id="@+id/fragment_coin_overview_rank_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/rank"
+                android:textColor="@color/colorError"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_coin_overview_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/coin_list_view_holder_symbol" />
+
+            <TextView
+                android:id="@+id/fragment_coin_overview_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(coin.rank)}"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_coin_overview_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_coin_overview_rank_text"
+                tools:text="1" />
+
+            <TextView
+                android:id="@+id/fragment_coin_overview_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/rank"
+                android:textColor="@color/colorError"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_coin_overview_type"
+                app:layout_constraintStart_toEndOf="@+id/fragment_coin_overview_rank"
+                app:layout_constraintTop_toBottomOf="@id/coin_list_view_holder_symbol" />
+
+            <TextView
+                android:id="@+id/fragment_coin_overview_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{coin.name}"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_coin_overview_type"
+                app:layout_constraintStart_toEndOf="@+id/fragment_coin_overview_rank"
+                app:layout_constraintTop_toBottomOf="@id/fragment_coin_overview_name_text"
+                tools:text="DOGE" />
+
+            <TextView
+                android:id="@+id/fragment_coin_overview_type_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/type"
+                android:textColor="@color/colorError"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/fragment_coin_overview_name"
+                app:layout_constraintTop_toBottomOf="@id/coin_list_view_holder_symbol" />
+
+            <TextView
+                android:id="@+id/fragment_coin_overview_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{coin.type}"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/fragment_coin_overview_name"
+                app:layout_constraintTop_toBottomOf="@id/fragment_coin_overview_type_text"
+                tools:text="Coin" />
+
+            <TextView
+                android:id="@+id/fragment_coin_overview_graph_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/error_graph_currenly_unavaiable"
+                android:textColor="@color/colorPrimary"
+                android:translationZ="1dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_coin_overview_linear_layout"
+                app:layout_constraintEnd_toEndOf="@id/fragment_coin_overview_linear_layout"
+                app:layout_constraintStart_toStartOf="@id/fragment_coin_overview_linear_layout"
+                app:layout_constraintTop_toTopOf="@id/fragment_coin_overview_linear_layout" />
+
+            <LinearLayout
+                android:id="@+id/fragment_coin_overview_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/fragment_coin_overview_last_refreshed">
+
+                <com.patrykandpatrick.vico.views.cartesian.CartesianChartView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:chartStyle="@style/ChartStyle" />
+            </LinearLayout>
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/fragment_coin_overview_progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:indeterminate="true"
+                app:indicatorColor="@color/colorError"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

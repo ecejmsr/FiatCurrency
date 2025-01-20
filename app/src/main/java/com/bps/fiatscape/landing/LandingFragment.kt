@@ -10,7 +10,6 @@ import com.bps.fiatscape.common.base.BaseFragment
 import com.bps.fiatscape.databinding.FragmentLandingBinding
 import com.bps.fiatscape.landing.rv.CryptoListRV
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class LandingFragment : BaseFragment<FragmentLandingBinding>() {
@@ -18,6 +17,8 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
     override val layoutRes: Int = R.layout.fragment_landing
     override val viewModel: LandingViewModel by viewModels()
     private lateinit var adapter: CryptoListRV
+    override var appBarNotificationsVisibility: Int = View.GONE
+    override var appBarBackButtonVisibility: Int = View.GONE
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,7 +28,9 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
     }
 
     private fun setUpRecyclerView() {
-        adapter = CryptoListRV()
+        adapter = CryptoListRV { coin ->
+            viewModel.navigateToCoinOverview(coin)
+        }
         binding.fragmentLandingRV.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@LandingFragment.adapter
