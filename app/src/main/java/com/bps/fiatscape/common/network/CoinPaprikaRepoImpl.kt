@@ -15,6 +15,7 @@ class CoinPaprikaRepoImpl(private val api: CoinPaprikaAPI): CoinPaprikaRepo {
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null && response.code() == 200) {
+                    Timber.d("listCoins call successful :: ${response.code()}")
                     emit(APIResponse.Success(body))
                 } else {
                     Timber.e("listCoins failed with code: ${response.code()} and body was $body")

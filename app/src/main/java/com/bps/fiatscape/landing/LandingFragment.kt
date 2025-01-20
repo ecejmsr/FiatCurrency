@@ -1,29 +1,70 @@
 package com.bps.fiatscape.landing
 
-import androidx.fragment.app.viewModels
+import android.app.AlertDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bps.fiatscape.R
+import com.bps.fiatscape.common.base.BaseFragment
+import com.bps.fiatscape.databinding.FragmentLandingBinding
+import com.bps.fiatscape.landing.rv.CryptoListRV
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
-class LandingFragment: Fragment() {
+class LandingFragment : BaseFragment<FragmentLandingBinding>() {
 
-    private val viewModel: LandingViewModel by viewModels()
+    override val layoutRes: Int = R.layout.fragment_landing
+    override val viewModel: LandingViewModel by viewModels()
+    private lateinit var adapter: CryptoListRV
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.coinList
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpRecyclerView()
+        setUpObservables()
+        viewModel.coinList.value?.let { adapter.updateCoins(it) }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_landing, container, false)
+    private fun setUpRecyclerView() {
+        adapter = CryptoListRV()
+        binding.fragmentLandingRV.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = this@LandingFragment.adapter
+        }
+    }
+
+    private fun setUpObservables() {
+        viewModel.coinList.observe(viewLifecycleOwner) { coinList ->
+            adapter.updateCoins(coinList)
+        }
+
+        viewModel.lastRefreshed.observe(viewLifecycleOwner) { refresh ->
+            binding.fragmentLandingRefreshDate.text = refresh
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) { error ->
+            if (error != null) {
+                showErrorDialog()
+            }
+        }
+
+        viewModel.loading.observe(viewLifecycleOwner) { loading ->
+            if (loading) {
+                binding.fragmentLandingProgressBar.visibility = View.VISIBLE
+            } else {
+                binding.fragmentLandingProgressBar.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun showErrorDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Error")
+        builder.setMessage("Error when querying the server. Services may be unavailable.")
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.create().show()
     }
 }

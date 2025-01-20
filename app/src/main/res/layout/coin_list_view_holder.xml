@@ -1,6 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="coin"
+            type="com.bps.fiatscape.common.dataclasses.Coin" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@color/white"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/coin_list_view_holder_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_primary_background"
+            android:padding="16dp"
+            android:text="@{coin.symbol}"
+            android:textColor="@color/colorTextPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="SSHH" />
+
+        <TextView
+            android:id="@+id/coin_list_view_holder_coin_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(coin.rank)}"
+            android:textColor="@color/colorError"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@id/coin_list_view_holder_coin_is_active"
+            app:layout_constraintStart_toEndOf="@id/coin_list_view_holder_symbol"
+            app:layout_constraintTop_toTopOf="@id/coin_list_view_holder_symbol"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/coin_list_view_holder_coin_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{coin.name}"
+            android:textColor="@color/design_default_color_primary_dark"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@id/coin_list_view_holder_coin_is_active"
+            app:layout_constraintStart_toEndOf="@id/coin_list_view_holder_symbol"
+            app:layout_constraintTop_toBottomOf="@id/coin_list_view_holder_coin_rank"
+            tools:text="DOGE COIN! SUCH WOW!" />
+
+        <TextView
+            android:id="@+id/coin_list_view_holder_coin_active_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="14dp"
+            android:text="@string/active"
+            android:textColor="@color/design_default_color_primary_dark"
+            app:layout_constraintBottom_toTopOf="@id/coin_list_view_holder_coin_is_active"
+            app:layout_constraintEnd_toEndOf="@id/coin_list_view_holder_coin_is_active"
+            app:layout_constraintStart_toStartOf="@id/coin_list_view_holder_coin_is_active" />
+
+        <RadioButton
+            android:id="@+id/coin_list_view_holder_coin_is_active"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@{coin.active}"
+            android:clickable="false"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/coin_list_view_holder_coin_baby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/new_coin"
+            android:src="@drawable/baby"
+            android:visibility="@{coin.new ? View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toEndOf="@id/coin_list_view_holder_symbol"
+            app:layout_constraintEnd_toStartOf="@id/coin_list_view_holder_coin_is_active"
+            app:layout_constraintTop_toBottomOf="@id/coin_list_view_holder_coin_name"
+            app:tint="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/coin_list_view_holder_coin_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{coin.type}"
+            android:textColor="@color/colorError"
+            app:layout_constraintStart_toEndOf="@id/coin_list_view_holder_symbol"
+            app:layout_constraintEnd_toStartOf="@id/coin_list_view_holder_coin_is_active"
+            app:layout_constraintTop_toBottomOf="@id/coin_list_view_holder_coin_baby"
+            tools:text="Coin" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
