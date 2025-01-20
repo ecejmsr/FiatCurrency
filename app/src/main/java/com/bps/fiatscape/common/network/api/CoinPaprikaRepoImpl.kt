@@ -1,5 +1,6 @@
 package com.bps.fiatscape.common.network.api
 
+import SearchResponse
 import com.bps.fiatscape.common.dataclasses.APIResponse
 import com.bps.fiatscape.common.dataclasses.Coin
 import com.bps.fiatscape.common.dataclasses.Ohlc
@@ -81,5 +82,28 @@ class CoinPaprikaRepoImpl(private val api: CoinPaprikaAPI): CoinPaprikaRepo {
     }.catch { e ->
         Timber.e("getTickersById exception: ${e.localizedMessage}")
         emit(APIResponse.Error(500, e.localizedMessage ?: "FATAL ERROR"))
+    }
+
+    override suspend fun search(coinName: String): Flow<APIResponse<SearchResponse>> = flow {
+        emit(APIResponse.Loading)
+        try {
+            val response = api.searchCoin(coinName)
+            if (response.isSuccessful) {
+                val body = response.body()
+                if (body != null && response.code() == 200) {
+                    Timber.d("search call successful :: ${response.code()}")
+                    emit(APIResponse.Success(body))
+                } else {
+                    Timber.e("search failed with code: ${response.code()} and body was $body")
+                    emit(APIResponse.Error(response.code(), response.errorBody().toString()))
+                }
+            } else {
+                Timber.e("search failed with code: ${response.code()} :: ${response.raw()}")
+                emit(APIResponse.Error(response.code(), response.errorBody().toString()))
+            }
+        } catch (e: Exception) {
+            Timber.e("search failed exception: ${e.localizedMessage}")
+            emit(APIResponse.Error(500, e.localizedMessage ?: "FATAL ERROR"))
+        }
     }
 }
