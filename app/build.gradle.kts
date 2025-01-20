@@ -59,7 +59,6 @@ kapt {
 
 dependencies {
     val navVersion = "2.8.5"
-    val mockkVersion = "1.13.16"
     val vicoVersion = "2.0.0-beta.7"
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
@@ -98,9 +97,6 @@ dependencies {
     implementation("androidx.security:security-crypto:1.0.0")
 
     testImplementation("junit:junit:4.13.2")
-    //MockK
-    testImplementation("io.mockk:mockk-android:${mockkVersion}")
-    testImplementation("io.mockk:mockk-agent:${mockkVersion}")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 }

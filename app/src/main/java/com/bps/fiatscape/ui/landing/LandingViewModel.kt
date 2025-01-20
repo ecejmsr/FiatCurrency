@@ -12,13 +12,16 @@ import com.bps.fiatscape.common.util.TimeUtils.refreshDataDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.retryWhen
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LandingViewModel  @Inject constructor(
     @ApplicationContext val app: Context,
-    private val coinRepo: CoinPaprikaRepo
+    private val repo: CoinPaprikaRepo
 ): BaseViewModel(app) {
     private val _coinList = MutableLiveData<List<Coin>>()
     val coinList: LiveData<List<Coin>> = _coinList
@@ -26,13 +29,20 @@ class LandingViewModel  @Inject constructor(
     private val _lastRefreshed = MutableLiveData<String>()
     val lastRefreshed: LiveData<String> = _lastRefreshed
 
+    private val _currUSDPrice = MutableLiveData<Double>()
+    val currUSDPrice: LiveData<Double> = _currUSDPrice
+
+    private val _loadingPrice = MutableLiveData<Boolean>()
+    val loadingPrice: LiveData<Boolean> = _loadingPrice
+
     init {
         fetchCoinList()
+        fetchTickerData()
     }
 
-    fun fetchCoinList() {
+    private fun fetchCoinList() {
         viewModelScope.launch(Dispatchers.IO) {
-            coinRepo.listCoins().collect { response ->
+            repo.listCoins().collect { response ->
                 when (response) {
                     is APIResponse.Loading -> {
                         _coinList.postValue(listOf())
@@ -53,6 +63,37 @@ class LandingViewModel  @Inject constructor(
             }
 
             refreshDataDate(_lastRefreshed, app)
+        }
+    }
+
+    fun fetchTickerData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            flow {
+                while (true) {
+                    emit(repo.getTickersById("btc-bitcoin"))
+                    delay(60_000L)
+                }
+            }.collect { responseFlow ->
+                responseFlow.collect { response ->
+                    when (response) {
+                        is APIResponse.Loading -> {
+                            _loadingPrice.postValue(true)
+                        }
+
+                        is APIResponse.Success -> {
+                            _loadingPrice.postValue(false)
+                            _currUSDPrice.postValue(response.data.quotes?.usd?.price ?: 0.0)
+                        }
+
+                        is APIResponse.Error -> {
+                            _loadingPrice.postValue(false)
+                            _error.postValue(response.message)
+                        }
+                    }
+                }
+
+                refreshDataDate(_lastRefreshed, app)
+            }
         }
     }
 

@@ -15,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.retryWhen
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -43,14 +44,14 @@ class CoinOverviewViewModel @Inject constructor(
     fun fetchTickerData() {
         _loadingPrice.value = true
         viewModelScope.launch(Dispatchers.IO) {
-            coin?.id?.let {
-                repo.getTickersById(it)
-                    .retryWhen { _, _ ->
-                        delay(60_000L)
-                        _loading.postValue(true)
-                        true
+            coin?.id?.let { coinId ->
+                flow {
+                    while (true) {
+                        emit(repo.getTickersById(coinId))
+                        delay(60_000L) // Wait 60 seconds before the next fetch
                     }
-                    .collect { response ->
+                }.collect { responseFlow ->
+                    responseFlow.collect { response ->
                         when (response) {
                             is APIResponse.Loading -> {
                                 _loadingPrice.postValue(true)
@@ -67,6 +68,7 @@ class CoinOverviewViewModel @Inject constructor(
                             }
                         }
                     }
+                }
             } ?: Timber.e("Error when attempting to get Ticker data. Coin id not found!")
             refreshDataDate(_lastRefreshed, app)
         }

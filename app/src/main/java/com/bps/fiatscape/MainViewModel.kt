@@ -42,7 +42,6 @@ class MainViewModel @Inject constructor(
     }
 
     fun toggleFavorite() {
-        Timber.d("Zelda toggle fav coin is $coin")
         coin?.let { coin ->
             if (_isFavorite.value == true) {
                 removeCoinFromFavorites(coin)

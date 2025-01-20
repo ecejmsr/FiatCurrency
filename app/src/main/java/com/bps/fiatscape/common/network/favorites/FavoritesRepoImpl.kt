@@ -11,12 +11,9 @@ import javax.inject.Inject
 class FavoritesRepoImpl @Inject constructor(private val encryptedSharedPref: EncryptedSharePrefRepo): FavoritesRepo {
     override fun getFavoriteCoins(): MutableList<Coin> {
         val favCoinJson = encryptedSharedPref.getKeyValueString(FAV_KEY)
-        Timber.d("Zelda pre Faves $favCoinJson")
         return favCoinJson?.let {
-            Timber.d("Zelda Faves $favCoinJson")
             val type = object : TypeToken<MutableList<Coin>>() {}.type
             val final = Gson().fromJson<MutableList<Coin>>(favCoinJson, type) ?: mutableListOf()
-            Timber.d("Zelda final $final")
             final
         } ?: mutableListOf()
     }
