@@ -43,12 +43,18 @@ class LandingFragment : BaseFragment<FragmentLandingBinding>() {
         }
 
         viewModel.lastRefreshed.observe(viewLifecycleOwner) { refresh ->
-            binding.fragmentLandingRefreshDate.text = refresh
+            binding.fragmentLandingRefreshLastRefreshed.text = refresh
         }
 
-        viewModel.error.observe(viewLifecycleOwner) { error ->
-            if (error != null) {
-                showErrorDialog()
+        viewModel.currUSDPrice.observe(viewLifecycleOwner) { price ->
+            binding.fragmentLandingRefreshPriceText.text = getString(R.string.current_price, price.toString())
+        }
+
+        viewModel.loadingPrice.observe(viewLifecycleOwner) { loading ->
+            if (loading) {
+                binding.fragmentLandingRefreshPriceRefreshProgress.visibility = View.VISIBLE
+            } else {
+                binding.fragmentLandingRefreshPriceRefreshProgress.visibility = View.GONE
             }
         }
 
