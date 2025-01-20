@@ -1,4 +1,4 @@
-package com.bps.fiatscape.common.network
+package com.bps.fiatscape.common.network.api
 
 import com.bps.fiatscape.common.dataclasses.Coin
 import com.bps.fiatscape.common.dataclasses.Ohlc

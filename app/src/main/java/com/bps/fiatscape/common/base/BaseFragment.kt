@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
-import androidx.navigation.NavDirections
 import com.bps.fiatscape.BR
 import com.bps.fiatscape.MainActivity
 import com.bps.fiatscape.MainActivity.Companion.backPressedFunction
@@ -24,6 +22,7 @@ abstract class BaseFragment<DataBinding : ViewDataBinding>: Fragment() {
     protected open var appBarBackButtonVisibility = View.GONE
     protected open var appBarNotificationsVisibility = View.VISIBLE
     protected open var appBarBackButtonFunction: (() -> Unit)? = null
+    protected open var appBarNotificationButtonFunction: (() -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,8 +57,10 @@ abstract class BaseFragment<DataBinding : ViewDataBinding>: Fragment() {
         mainActivity.setAppBar(
             backBtn = appBarBackButtonVisibility,
             notificationBtn = appBarNotificationsVisibility,
-            backButtonFunction = appBarBackButtonFunction
+            backButtonFunction = appBarBackButtonFunction,
+            notificationBtnFunction = appBarNotificationButtonFunction
         )
         backPressedFunction = appBarBackButtonFunction
+
     }
 }

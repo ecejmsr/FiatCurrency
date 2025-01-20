@@ -15,4 +15,5 @@
     <string name="type">Type</string>
     <string name="error_graph_currenly_unavaiable">Error: Graph Currenly Unavaiable</string>
     <string name="current_price">Current Price: %1$s</string>
+    <string name="no_favorite_coins">No favorite coins added. Add new coins to favorites to find them here.</string>
 </resources>

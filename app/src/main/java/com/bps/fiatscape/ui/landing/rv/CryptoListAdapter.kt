@@ -1,4 +1,4 @@
-package com.bps.fiatscape.landing.rv
+package com.bps.fiatscape.ui.landing.rv
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import com.bps.fiatscape.R
 import com.bps.fiatscape.common.dataclasses.Coin
 import com.bps.fiatscape.databinding.CoinListViewHolderBinding
 
-class CryptoListRV(private val onCoinSelected: (Coin) -> Unit) : RecyclerView.Adapter<CryptoListRV.CryptoViewHolder>() {
+class CryptoListAdapter(private val onCoinSelected: (Coin) -> Unit) : RecyclerView.Adapter<CryptoListAdapter.CryptoViewHolder>() {
     private val coins = mutableListOf<Coin>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CryptoViewHolder {

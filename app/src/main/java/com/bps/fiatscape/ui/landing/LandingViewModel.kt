@@ -1,4 +1,4 @@
-package com.bps.fiatscape.landing
+package com.bps.fiatscape.ui.landing
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.bps.fiatscape.common.base.BaseViewModel
 import com.bps.fiatscape.common.dataclasses.APIResponse
 import com.bps.fiatscape.common.dataclasses.Coin
-import com.bps.fiatscape.common.network.CoinPaprikaRepo
+import com.bps.fiatscape.common.network.api.CoinPaprikaRepo
 import com.bps.fiatscape.common.util.TimeUtils.refreshDataDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -57,6 +57,7 @@ class LandingViewModel  @Inject constructor(
     }
 
     fun navigateToCoinOverview(coin: Coin) {
-        navigationCommand.value = LandingFragmentDirections.actionLandingFragmentToCoinOverviewFragment(coin)
+        navigationCommand.value =
+            LandingFragmentDirections.actionLandingFragmentToCoinOverviewFragment(coin)
     }
 }
