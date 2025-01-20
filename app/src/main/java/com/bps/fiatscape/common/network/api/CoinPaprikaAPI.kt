@@ -1,5 +1,6 @@
 package com.bps.fiatscape.common.network.api
 
+import SearchResponse
 import com.bps.fiatscape.common.dataclasses.Coin
 import com.bps.fiatscape.common.dataclasses.Ohlc
 import com.bps.fiatscape.common.dataclasses.Ticker
@@ -23,4 +24,7 @@ interface CoinPaprikaAPI {
     suspend fun getTickerData(
         @Path("coinId") coinId: String
     ): Response<Ticker>
+
+    @GET("v1/search")
+    suspend fun searchCoin(@Query("q") query: String): Response<SearchResponse>
 }

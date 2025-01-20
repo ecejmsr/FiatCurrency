@@ -1,5 +1,6 @@
 package com.bps.fiatscape.common.network.api
 
+import SearchResponse
 import com.bps.fiatscape.common.dataclasses.APIResponse
 import com.bps.fiatscape.common.dataclasses.Coin
 import com.bps.fiatscape.common.dataclasses.Ohlc
@@ -12,4 +13,6 @@ interface CoinPaprikaRepo {
     suspend fun getHistoricOHCL(coinId: String, startDate: String, endDate: String): Flow<APIResponse<List<Ohlc>>>
 
     suspend fun getTickersById(coinId: String): Flow<APIResponse<Ticker>>
+
+    suspend fun search(coinName: String): Flow<APIResponse<SearchResponse>>
 }
